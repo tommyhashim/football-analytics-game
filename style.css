@@ -226,6 +226,198 @@ th { color: var(--text-sub); }
   font-weight: bold;
 }
 
+.hidden { display: none !important; }  color: var(--text-sub);
+  margin: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .grid-2col { grid-template-columns: 1fr; }
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.btn-diff {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.easy { background-color: #16a34a; }
+.medium { background-color: #d97706; }
+.hard { background-color: #dc2626; }
+
+.highlight {
+  color: var(--accent-gold);
+  font-size: 1.4rem;
+}
+
+.scroll-list {
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-card {
+  padding: 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #0f172a;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.player-header button {
+  background: var(--button-blue);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.badge {
+  background: #334155;
+  color: #38bdf8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  background: #1e293b;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-align: center;
+  margin-bottom: 6px;
+  color: #cbd5e1;
+}
+
+.pos-stat {
+  font-size: 0.8rem;
+  color: var(--text-sub);
+}
+
+.btn-primary, .btn-success, .btn-ucl {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.btn-primary { background-color: var(--button-blue); }
+.btn-primary:disabled { background-color: #475569; cursor: not-allowed; }
+.btn-success { background-color: var(--success); }
+.btn-ucl { background: linear-gradient(135deg, #1e1b4b, #4338ca); border: 1px solid var(--accent-gold); color: var(--accent-gold); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+
+th { color: var(--text-sub); }
+
+.log-box {
+  background: #090d16;
+  color: #4ade80;
+  font-family: monospace;
+  padding: 15px;
+  height: 200px;
+  overflow-y: auto;
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+}
+
+.ucl-card {
+  background: #1e1b4b;
+  border: 2px solid var(--accent-gold);
+  margin-top: 20px;
+}
+
+.summary-card {
+  margin-top: 20px;
+  border: 1px solid var(--accent-gold);
+}
+
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.award-box {
+  background: #0f172a;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid var(--card-border);
+}
+
+.award-box h4 {
+  margin: 0 0 10px 0;
+  color: var(--accent-gold);
+}
+
+.award-box p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
 .hidden { display: none !important; }  { name: "Red Devils", pts: 0, gd: 0 },
   { name: "North Lions", pts: 0, gd: 0 },
   { name: "Coast FC", pts: 0, gd: 0 }
