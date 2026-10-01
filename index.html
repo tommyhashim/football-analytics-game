@@ -9,68 +9,106 @@
 <body>
   <header>
     <h1>⚽ Moneyball FC Manager</h1>
-    <p>Build an 11-player squad using 6 core attributes & deep positional stats!</p>
+    <p>Build an 11-player squad, simulate the season, and target Champions League glory!</p>
   </header>
 
   <main class="container">
-    <!-- Setup & Budget Control -->
-    <section class="card setup-card">
-      <h2>1. Difficulty & Budget</h2>
-      <div class="difficulty-buttons">
-        <button onclick="setDifficulty('easy')" class="btn-diff easy">Easy (€500M)</button>
-        <button onclick="setDifficulty('medium')" class="btn-diff medium">Medium (€300M)</button>
-        <button onclick="setDifficulty('hard')" class="btn-diff hard">Hard (€180M)</button>
-      </div>
-      <div class="finance-status">
-        <h3>Remaining Budget: <span class="highlight">€<span id="budget">300</span>M</span></h3>
-        <p>Squad Count: <span id="squad-count">0</span>/11 (1 GK, 4 DEF, 4 MID, 2 ST required)</p>
-      </div>
-    </section>
-
-    <!-- Squad Building Dashboard -->
-    <div class="grid-2col">
-      <section class="card">
-        <h2>Transfer Market</h2>
-        <div id="player-list" class="scroll-list"></div>
+    <!-- PHASE 1: Squad Building Screen -->
+    <div id="setup-phase">
+      <section class="card setup-card">
+        <h2>1. Difficulty & Budget</h2>
+        <div class="difficulty-buttons">
+          <button onclick="setDifficulty('easy')" class="btn-diff easy">Easy (€500M)</button>
+          <button onclick="setDifficulty('medium')" class="btn-diff medium">Medium (€300M)</button>
+          <button onclick="setDifficulty('hard')" class="btn-diff hard">Hard (€180M)</button>
+        </div>
+        <div class="finance-status">
+          <h3>Remaining Budget: <span class="highlight">€<span id="budget">300</span>M</span></h3>
+          <p>Squad Count: <span id="squad-count">0</span>/11 (1 GK, 4 DEF, 4 MID, 2 ST required)</p>
+        </div>
       </section>
 
-      <section class="card">
-        <h2>Your Squad</h2>
-        <ul id="my-squad" class="squad-list scroll-list"></ul>
-        <button id="start-season-btn" class="btn-primary" onclick="startSeason()" disabled>Start 10-Match Season</button>
-      </section>
+      <div class="grid-2col">
+        <section class="card">
+          <h2>Transfer Market</h2>
+          <div id="player-list" class="scroll-list"></div>
+        </section>
+
+        <section class="card">
+          <h2>Your Squad</h2>
+          <ul id="my-squad" class="squad-list scroll-list"></ul>
+          <button id="start-season-btn" class="btn-primary" onclick="startSeason()" disabled>Start 10-Match Season</button>
+        </section>
+      </div>
     </div>
 
-    <!-- Season Dashboard -->
-    <section id="season-section" class="card hidden">
-      <h2>2. League Season & Player Performance</h2>
-      <div class="grid-2col">
-        <div>
-          <h3>League Table</h3>
-          <table id="league-table">
-            <thead>
-              <tr><th>Pos</th><th>Club</th><th>Pts</th><th>GD</th></tr>
-            </thead>
-            <tbody id="league-body"></tbody>
-          </table>
-          <button id="sim-match-btn" class="btn-success" onclick="playNextLeagueMatch()">Play Match (<span id="match-num">1</span>/10)</button>
+    <!-- PHASE 2: Season Simulation Screen -->
+    <div id="simulation-phase" class="hidden">
+      <section class="card">
+        <h2>2. League Season Simulation</h2>
+        <div class="grid-2col">
+          <div>
+            <h3>League Table</h3>
+            <table id="league-table">
+              <thead>
+                <tr><th>Pos</th><th>Club</th><th>Pts</th><th>GD</th></tr>
+              </thead>
+              <tbody id="league-body"></tbody>
+            </table>
+            <button id="sim-match-btn" class="btn-success" onclick="playNextLeagueMatch()">Play Next Match (<span id="match-num">1</span>/10)</button>
+          </div>
+          <div>
+            <h3>Match Commentary</h3>
+            <div id="match-log" class="log-box"></div>
+          </div>
         </div>
-        <div>
-          <h3>Top Scorers & Assist Leaders</h3>
-          <ul id="squad-stats-lead" class="scroll-list-sm"></ul>
-          <h3>Match Commentary</h3>
-          <div id="match-log" class="log-box"></div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Champions League Phase -->
-    <section id="ucl-section" class="card ucl-card hidden">
-      <h2>🏆 Champions League Knockout Phase</h2>
-      <p id="ucl-status"></p>
-      <button id="ucl-btn" class="btn-ucl" onclick="playUCLSemiFinal()">Play Champions League Final</button>
-      <div id="ucl-log" class="log-box"></div>
-    </section>
+      <!-- PHASE 3: Champions League Screen (Shows ONLY if top 4) -->
+      <section id="ucl-section" class="card ucl-card hidden">
+        <h2>🏆 Champions League Knockout Stage</h2>
+        <p id="ucl-status"></p>
+        <button id="ucl-btn" class="btn-ucl" onclick="playUCLStage()">Simulate UCL Round</button>
+        <div id="ucl-log" class="log-box"></div>
+      </section>
+
+      <!-- PHASE 4: End of Season Summary Screen -->
+      <section id="summary-section" class="card summary-card hidden">
+        <h2>📊 End of Season Report</h2>
+        
+        <div class="awards-grid">
+          <div class="award-box">
+            <h4>🥇 Top Scorer</h4>
+            <p id="top-scorer">-</p>
+          </div>
+          <div class="award-box">
+            <h4>🎯 Top Assister</h4>
+            <p id="top-assister">-</p>
+          </div>
+          <div class="award-box">
+            <h4>⭐ Best Overall Player</h4>
+            <p id="mvp-player">-</p>
+          </div>
+        </div>
+
+        <h3>Full Squad Performance Breakdown</h3>
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Pos</th>
+              <th>OVR</th>
+              <th>GP</th>
+              <th>Goals</th>
+              <th>Assists</th>
+              <th>Total G/A</th>
+            </tr>
+          </thead>
+          <tbody id="summary-body"></tbody>
+        </table>
+        <button class="btn-primary" onclick="location.reload()">Start New Season</button>
+      </section>
+    </div>
   </main>
 
   <script src="script.js"></script>
