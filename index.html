@@ -2,30 +2,76 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Moneyball FC Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moneyball FC: Advanced Analytics Manager</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Moneyball FC Management</h1>
-  
-  <div id="finance-board">
-    <h2>Remaining Budget: €<span id="budget">100</span>M</h2>
-  </div>
+  <header>
+    <h1>⚽ Moneyball FC Manager</h1>
+    <p>Build an 11-player squad using 6 core attributes & deep positional stats!</p>
+  </header>
 
-  <section class="container">
-    <div class="market">
-      <h3>Transfer Market</h3>
-      <div id="player-list"></div>
+  <main class="container">
+    <!-- Setup & Budget Control -->
+    <section class="card setup-card">
+      <h2>1. Difficulty & Budget</h2>
+      <div class="difficulty-buttons">
+        <button onclick="setDifficulty('easy')" class="btn-diff easy">Easy (€500M)</button>
+        <button onclick="setDifficulty('medium')" class="btn-diff medium">Medium (€300M)</button>
+        <button onclick="setDifficulty('hard')" class="btn-diff hard">Hard (€180M)</button>
+      </div>
+      <div class="finance-status">
+        <h3>Remaining Budget: <span class="highlight">€<span id="budget">300</span>M</span></h3>
+        <p>Squad Count: <span id="squad-count">0</span>/11 (1 GK, 4 DEF, 4 MID, 2 ST required)</p>
+      </div>
+    </section>
+
+    <!-- Squad Building Dashboard -->
+    <div class="grid-2col">
+      <section class="card">
+        <h2>Transfer Market</h2>
+        <div id="player-list" class="scroll-list"></div>
+      </section>
+
+      <section class="card">
+        <h2>Your Squad</h2>
+        <ul id="my-squad" class="squad-list scroll-list"></ul>
+        <button id="start-season-btn" class="btn-primary" onclick="startSeason()" disabled>Start 10-Match Season</button>
+      </section>
     </div>
 
-    <div class="squad">
-      <h3>Your Squad (<span id="squad-count">0</span>/3)</h3>
-      <ul id="my-squad"></ul>
-      <button id="sim-btn" onclick="simulateMatch()" disabled>Simulate Match</button>
-    </div>
-  </section>
+    <!-- Season Dashboard -->
+    <section id="season-section" class="card hidden">
+      <h2>2. League Season & Player Performance</h2>
+      <div class="grid-2col">
+        <div>
+          <h3>League Table</h3>
+          <table id="league-table">
+            <thead>
+              <tr><th>Pos</th><th>Club</th><th>Pts</th><th>GD</th></tr>
+            </thead>
+            <tbody id="league-body"></tbody>
+          </table>
+          <button id="sim-match-btn" class="btn-success" onclick="playNextLeagueMatch()">Play Match (<span id="match-num">1</span>/10)</button>
+        </div>
+        <div>
+          <h3>Top Scorers & Assist Leaders</h3>
+          <ul id="squad-stats-lead" class="scroll-list-sm"></ul>
+          <h3>Match Commentary</h3>
+          <div id="match-log" class="log-box"></div>
+        </div>
+      </div>
+    </section>
 
-  <div id="match-result"></div>
+    <!-- Champions League Phase -->
+    <section id="ucl-section" class="card ucl-card hidden">
+      <h2>🏆 Champions League Knockout Phase</h2>
+      <p id="ucl-status"></p>
+      <button id="ucl-btn" class="btn-ucl" onclick="playUCLSemiFinal()">Play Champions League Final</button>
+      <div id="ucl-log" class="log-box"></div>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
