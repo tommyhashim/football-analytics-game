@@ -1,40 +1,232 @@
-// Database with 6 Core Attributes (PAC, SHO, PAS, DRI, DEF, STR) + Positional Metrics
-const playerDatabase = [
-  // Goalkeepers
-  { id: 1, name: "David Raya", pos: "GK", cost: 18, pac: 68, sho: 15, pas: 78, dri: 70, def: 84, str: 72, posStat: "Save %: 78.5% | Clean Sheets: 16" },
-  { id: 2, name: "G. Vicario", pos: "GK", cost: 12, pac: 65, sho: 12, pas: 68, dri: 62, def: 81, str: 75, posStat: "Save %: 73.2% | Clean Sheets: 10" },
-  
-  // Defenders
-  { id: 3, name: "W. Saliba", pos: "DEF", cost: 28, pac: 83, sho: 38, pas: 76, dri: 74, def: 89, str: 86, posStat: "Tackles/90: 2.9 | Interceptions: 1.8" },
-  { id: 4, name: "Gabriel", pos: "DEF", cost: 22, pac: 78, sho: 45, pas: 68, dri: 65, def: 87, str: 89, posStat: "Tackles/90: 2.6 | Interceptions: 1.5" },
-  { id: 5, name: "D. Udogie", pos: "DEF", cost: 15, pac: 88, sho: 62, pas: 72, dri: 81, def: 78, str: 79, posStat: "Tackles/90: 2.4 | Interceptions: 1.2" },
-  { id: 6, name: "J. Gvardiol", pos: "DEF", cost: 25, pac: 82, sho: 65, pas: 79, dri: 80, def: 85, str: 84, posStat: "Tackles/90: 2.1 | Interceptions: 1.4" },
-  { id: 7, name: "Dan Burn", pos: "DEF", cost: 8, pac: 58, sho: 32, pas: 60, dri: 55, def: 79, str: 88, posStat: "Tackles/90: 1.8 | Interceptions: 1.1" },
+:root {
+  --primary-bg: #0f172a;
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --accent-gold: #fbbf24;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --button-blue: #3b82f6;
+}
 
-  // Midfielders
-  { id: 8, name: "Declan Rice", pos: "MID", cost: 32, pac: 76, sho: 72, pas: 84, dri: 80, def: 86, str: 85, posStat: "Prog Passes: 6.8 | Chances Created: 1.8" },
-  { id: 9, name: "M. Odegaard", pos: "MID", cost: 35, pac: 77, sho: 81, pas: 90, dri: 88, def: 62, str: 64, posStat: "Prog Passes: 8.9 | Chances Created: 3.2" },
-  { id: 10, name: "A. Mac Allister", pos: "MID", cost: 24, pac: 70, sho: 78, pas: 85, dri: 82, def: 78, str: 74, posStat: "Prog Passes: 6.1 | Chances Created: 2.1" },
-  { id: 11, name: "K. Mainoo", pos: "MID", cost: 15, pac: 74, sho: 68, pas: 80, dri: 84, def: 75, str: 72, posStat: "Prog Passes: 4.8 | Chances Created: 1.2" },
-  { id: 12, name: "C. Gallagher", pos: "MID", cost: 12, pac: 79, sho: 74, pas: 76, dri: 78, def: 77, str: 80, posStat: "Prog Passes: 3.9 | Chances Created: 1.1" },
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--primary-bg);
+  margin: 0;
+  padding: 20px;
+  color: var(--text-main);
+}
 
-  // Strikers
-  { id: 13, name: "Bukayo Saka", pos: "ST", cost: 38, pac: 87, sho: 84, pas: 83, dri: 88, def: 55, str: 72, posStat: "xG/90: 0.55 | Shots on Target: 62%" },
-  { id: 14, name: "Ollie Watkins", pos: "ST", cost: 30, pac: 86, sho: 85, pas: 75, dri: 80, def: 42, str: 78, posStat: "xG/90: 0.62 | Shots on Target: 58%" },
-  { id: 15, name: "Alexander Isak", pos: "ST", cost: 28, pac: 89, sho: 86, pas: 72, dri: 84, def: 35, str: 71, posStat: "xG/90: 0.58 | Shots on Target: 64%" },
-  { id: 16, name: "Dominic Solanke", pos: "ST", cost: 16, pac: 81, sho: 80, pas: 68, dri: 74, def: 40, str: 82, posStat: "xG/90: 0.48 | Shots on Target: 51%" },
-  { id: 17, name: "Anthony Gordon", pos: "ST", cost: 18, pac: 90, sho: 78, pas: 74, dri: 83, def: 45, str: 68, posStat: "xG/90: 0.41 | Shots on Target: 54%" },
-  { id: 18, name: "Rodrigo Muniz", pos: "ST", cost: 9, pac: 72, sho: 77, pas: 58, dri: 70, def: 32, str: 80, posStat: "xG/90: 0.44 | Shots on Target: 48%" }
-];
+header {
+  text-align: center;
+  background: linear-gradient(135deg, #1e1b4b, #312e81);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
 
-let budget = 300;
-let squad = [];
-let currentMatch = 1;
+header h1 {
+  margin: 0 0 5px 0;
+}
 
-let leagueTable = [
-  { name: "Your Club", pts: 0, gd: 0 },
-  { name: "City Rivals", pts: 0, gd: 0 },
-  { name: "Red Devils", pts: 0, gd: 0 },
+header p {
+  color: var(--text-sub);
+  margin: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .grid-2col { grid-template-columns: 1fr; }
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.btn-diff {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.easy { background-color: #16a34a; }
+.medium { background-color: #d97706; }
+.hard { background-color: #dc2626; }
+
+.highlight {
+  color: var(--accent-gold);
+  font-size: 1.4rem;
+}
+
+.scroll-list {
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.player-card {
+  padding: 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: #0f172a;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.player-header button {
+  background: var(--button-blue);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.badge {
+  background: #334155;
+  color: #38bdf8;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  background: #1e293b;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-align: center;
+  margin-bottom: 6px;
+  color: #cbd5e1;
+}
+
+.pos-stat {
+  font-size: 0.8rem;
+  color: var(--text-sub);
+}
+
+.btn-primary, .btn-success, .btn-ucl {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.btn-primary { background-color: var(--button-blue); }
+.btn-primary:disabled { background-color: #475569; cursor: not-allowed; }
+.btn-success { background-color: var(--success); }
+.btn-ucl { background: linear-gradient(135deg, #1e1b4b, #4338ca); border: 1px solid var(--accent-gold); color: var(--accent-gold); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+
+th { color: var(--text-sub); }
+
+.log-box {
+  background: #090d16;
+  color: #4ade80;
+  font-family: monospace;
+  padding: 15px;
+  height: 200px;
+  overflow-y: auto;
+  border-radius: 6px;
+  border: 1px solid var(--card-border);
+}
+
+.ucl-card {
+  background: #1e1b4b;
+  border: 2px solid var(--accent-gold);
+  margin-top: 20px;
+}
+
+.summary-card {
+  margin-top: 20px;
+  border: 1px solid var(--accent-gold);
+}
+
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.award-box {
+  background: #0f172a;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid var(--card-border);
+}
+
+.award-box h4 {
+  margin: 0 0 10px 0;
+  color: var(--accent-gold);
+}
+
+.award-box p {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.hidden { display: none !important; }  { name: "Red Devils", pts: 0, gd: 0 },
   { name: "North Lions", pts: 0, gd: 0 },
   { name: "Coast FC", pts: 0, gd: 0 }
 ];
